@@ -3,18 +3,23 @@
 import InputSearchDebounce from "@/components/search";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Edit, Plus, Trash } from "lucide-react";
+import { Edit, Eye, Plus, Trash } from "lucide-react";
 import React, { useState } from "react";
 import { useList } from "../hooks/useList";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 import TodoAction from "../components/action";
+import Details from "../components/details";
 
 const DashboardPage = () => {
   const [action, setAction] = useState({
     open: false,
     id: undefined as string | undefined,
+  });
+  const [detail, setDetail] = useState({
+    open: false,
+    id: "" as string,
   });
   const { list, setSearch, search, updateStatus, deleteTodo } = useList();
   return (
@@ -58,6 +63,13 @@ const DashboardPage = () => {
                     <Button
                       variant={"outline"}
                       size={"icon"}
+                      onClick={() => setDetail({ open: true, id: item.id })}
+                    >
+                      <Eye />
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      size={"icon"}
                       onClick={() => setAction({ open: true, id: item.id })}
                     >
                       <Edit />
@@ -82,6 +94,11 @@ const DashboardPage = () => {
           </div>
         </CardContent>
       </Card>
+      <Details
+        open={detail.open}
+        id={detail.id}
+        onClose={() => setDetail({ open: false, id: "" })}
+      />
       <TodoAction
         onSuccess={() => {
           list.refetch();

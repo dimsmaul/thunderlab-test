@@ -17,10 +17,11 @@ import {
 import { Input } from "@/components/ui/input";
 import auth from "@/config/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { details } from "./details";
 
 export interface TodoActionProps {
   open: boolean;
@@ -45,6 +46,28 @@ const TodoAction: React.FC<TodoActionProps> = ({
     },
   });
 
+  const query = useQuery({
+    queryKey: ["todo-edit", id, open],
+    queryFn: () => details(id!),
+    enabled: !!id && open,
+  });
+
+  useEffect(() => {
+    if (id) {
+      const dt = query?.data?.data;
+      form.setValue("title", dt?.title || "");
+      form.setValue("content", dt?.content || "");
+      form.setValue(
+        "targetDate",
+        dt?.targetDate ? new Date(dt?.targetDate) : undefined
+      );
+      form.setValue(
+        "actualDate",
+        dt?.actualDate ? new Date(dt?.actualDate) : undefined
+      );
+    }
+  }, [id, open, query.data]);
+
   const mutation = useMutation({
     mutationKey: ["todo", id],
     mutationFn: (data: z.infer<typeof formSchema>) => handleSave(data, id),
@@ -55,10 +78,6 @@ const TodoAction: React.FC<TodoActionProps> = ({
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     mutation.mutate(data);
-    // confirmAPIForm({
-    //   callAPI: () => ,
-    //   onAlertSuccess: () => {},
-    // });
   };
 
   return (
