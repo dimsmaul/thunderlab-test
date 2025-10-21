@@ -85,8 +85,10 @@ const DashboardPage = () => {
                 </div>
                 <div>
                   <span className="text-muted-foreground">
-                    Target :
-                    {dayjs(item.targetDate || "").format("DD MMMM YYYY")}
+                    Target :{' '}
+                    {item.targetDate
+                      ? dayjs(item.targetDate || "").format("DD MMMM YYYY")
+                      : "-"}
                   </span>
                 </div>
               </div>
