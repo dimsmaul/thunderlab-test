@@ -29,13 +29,6 @@ export const GET = async (request: Request) => {
           userId: user.id,
         },
       ],
-      // title: search
-      //   ? {
-      //       contains: search,
-      //       mode: "insensitive",
-      //     }
-      //   : undefined,
-      // userId: user.id,
     },
     orderBy: {
       completed: "asc",

@@ -1,49 +1,38 @@
 import { prisma } from "@/lib/prisma";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export const GET = async (
-  _: Request,
-  { params }: { params: { id: string } }
-) => {
+export async function GET(
+  _request: NextRequest,
+  context: { params: { id: string } }
+) {
+  const { id } = context.params;
+
   const todo = await prisma.todo.findUnique({
-    where: {
-      id: params.id,
-    },
+    where: { id },
   });
 
   if (!todo) {
-    return new Response(
-      JSON.stringify({
-        message: "Todo not found",
-      }),
-      { status: 404 }
-    );
+    return new Response(JSON.stringify({ message: "Todo not found" }), {
+      status: 404,
+    });
   }
 
   return new Response(
-    JSON.stringify({
-      message: "Todo fetched successfully",
-      data: todo,
-    }),
+    JSON.stringify({ message: "Todo fetched successfully", data: todo }),
     { status: 200 }
   );
-};
+}
 
-export const PATCH = async (
-  request: Request,
-  {
-    params,
-  }: {
-    params: { id: string };
-  }
-) => {
+export async function PATCH(
+  request: NextRequest,
+  context: { params: { id: string } }
+) {
+  const { id } = context.params;
   const { title, content, targetDate, actualDate, completed } =
     await request.json();
 
   const todo = await prisma.todo.update({
-    where: {
-      id: params.id,
-    },
+    where: { id },
     data: {
       title,
       content,
@@ -54,28 +43,21 @@ export const PATCH = async (
   });
 
   return new Response(
-    JSON.stringify({
-      message: "Todo updated successfully",
-      data: todo,
-    }),
+    JSON.stringify({ message: "Todo updated successfully", data: todo }),
     { status: 200 }
   );
-};
+}
 
-export const DELETE = async (
-  _: Request,
-  { params }: { params: { id: string } }
-) => {
-  await prisma.todo.delete({
-    where: {
-      id: params.id,
-    },
-  });
+export async function DELETE(
+  _request: NextRequest,
+  context: { params: { id: string } }
+) {
+  const { id } = context.params;
+
+  await prisma.todo.delete({ where: { id } });
 
   return new Response(
-    JSON.stringify({
-      message: "Todo deleted successfully",
-    }),
+    JSON.stringify({ message: "Todo deleted successfully" }),
     { status: 200 }
   );
-};
+}
