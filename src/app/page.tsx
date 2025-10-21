@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 const AuthPage = () => {
   const [tabs, setTabs] = React.useState<"sign-in" | "sign-up">("sign-in");
   const { setUsers } = useAuthStore();
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema | typeof signUpSchema>>({
     resolver: zodResolver(tabs === "sign-in" ? signInSchema : signUpSchema),
@@ -109,7 +109,11 @@ const AuthPage = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="input password" {...field} />
+                          <Input
+                            placeholder="input password"
+                            type="password"
+                            {...field}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -150,7 +154,11 @@ const AuthPage = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="input password" {...field} />
+                          <Input
+                            placeholder="input password"
+                            type="password"
+                            {...field}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -164,6 +172,7 @@ const AuthPage = () => {
                         <FormControl>
                           <Input
                             placeholder="input confirm password"
+                            type="password"
                             {...field}
                           />
                         </FormControl>

@@ -42,7 +42,6 @@ const TodoAction: React.FC<TodoActionProps> = ({
       content: "",
       targetDate: undefined,
       actualDate: undefined,
-      completed: false,
     },
   });
 
@@ -147,7 +146,6 @@ const formSchema = z.object({
   content: z.string().optional(),
   targetDate: z.date().optional(),
   actualDate: z.date().optional(),
-  completed: z.boolean().optional(),
 });
 
 const handleSave = async (data: z.infer<typeof formSchema>, id?: string) => {
