@@ -1,0 +1,22 @@
+### Variables
+@baseUrl = http://localhost:3000/api
+@contentType = application/json
+
+### Sign In
+POST  {{baseUrl}}/auth/sign-in
+Content-Type: {{contentType}}
+
+{
+    "email": "john@gmail.com",
+    "password": "password"
+}
+
+### Sign Up
+POST  {{baseUrl}}/auth/sign-up
+Content-Type: {{contentType}}
+
+{
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "password": "password"
+}

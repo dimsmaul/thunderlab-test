@@ -1,0 +1,48 @@
+### Variables
+@baseUrl = http://localhost:3000/api/v1
+@contentType = application/json
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtaDA0cWhpMzAwMDByY2tiMHJsZGEwanEiLCJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNzYxMDMxODc2LCJleHAiOjE3NjEwMzU0NzZ9.NdHZKRWdApt8dX2qo3oPW7B2_81xjJuQEtuxRO_sHBY
+
+### GET All Todos
+GET  {{baseUrl}}/todo?search=
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+
+### Create a new Todo
+POST  {{baseUrl}}/todo
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+  "title": "New Todo Item 2",
+  "content": "This is a description for the new todo item.",
+  "targetDate": "2025-12-31",
+  "actualDate": "2025-12-30",
+  "completed": false
+}
+
+
+### Get a Todo by ID
+GET {{baseUrl}}/todo/cmh054c3r0002rckb7q37mzfe
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+### Update a Todo by ID
+PATCH {{baseUrl}}/todo/cmh054c3r0002rckb7q37mzfe
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+  "title": "Updated Todo Item",
+  "content": "This is an updated description for the todo item.",
+  "targetDate": "2025-10-10",
+  "actualDate": "2025-10-21",
+  "completed": true
+}
+
+
+### Delete a Todo by ID
+DELETE {{baseUrl}}/todo/cmh05rmek0003rclxqiw1y7rd
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
